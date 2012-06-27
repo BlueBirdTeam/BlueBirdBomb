@@ -1,6 +1,7 @@
 package Models;
 
 import java.awt.Image;
+import java.io.IOException;
 
 public class Player {
     
@@ -31,6 +32,10 @@ public class Player {
     
     public void moveOnY(int yMoveSize) {
         yPosition += yMoveSize;
+    }
+    
+    public void putBomb() throws IOException {
+        new Bomb(getxPosition(), getyPosition());
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

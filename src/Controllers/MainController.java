@@ -7,6 +7,7 @@ import Models.Player;
 import Vues.MainVue;
 import java.awt.Image;
 import java.awt.MediaTracker;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -23,6 +24,8 @@ public class MainController extends JFrame implements KeyListener {
     private MainVue mainVue;
     private MainModel mainModel;
     private MediaTracker tracker;
+    private int frameWidth = 970;
+    private int frameHeight = 750;
         
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -45,7 +48,7 @@ public class MainController extends JFrame implements KeyListener {
         tracker.addImage(playerImage, 0);
         
         mainModel.setPlayer(new Player(0, 0, playerImage));
-        mainModel.setMap(new Map(new MapFile(new File("map.bin"))));
+        mainModel.setMap(new Map(new MapFile(new File("map2"))));
         tracker.addImage(mainModel.getMap().getImages()[0], 1);
         tracker.addImage(mainModel.getMap().getImages()[1], 2);
         tracker.addImage(mainModel.getMap().getImages()[2], 3);
@@ -53,9 +56,11 @@ public class MainController extends JFrame implements KeyListener {
         mainVue = new MainVue(mainModel);        
         mainModel.setMainVue(mainVue);
         
-        setSize(970, 750);
+        setSize(frameWidth, frameHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().add(mainVue);
+        setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frameWidth)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - frameHeight)/2);
+        setResizable(false);
         setVisible(true);
         
         try {
