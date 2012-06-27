@@ -1,6 +1,7 @@
 package Models;
 
 import Vues.MainVue;
+import java.io.IOException;
 
 public class MainModel {
     
@@ -36,6 +37,11 @@ public class MainModel {
             player.moveOnY(yMoveSize);
             mainVue.repaint();
         }
+    }
+    
+    public void putBomb() throws IOException{
+        player.putBomb();
+        mainVue.repaint();
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
