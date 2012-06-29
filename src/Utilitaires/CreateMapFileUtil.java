@@ -10,7 +10,7 @@ public class CreateMapFileUtil {
         
         String name = "";
         System.out.print("Donnez un nom à la map : ");
-        name = Scan.readString();
+        name = Scan.readString() + ".bin";
         
         MapFile mapFile = new MapFile(new File(name));
         

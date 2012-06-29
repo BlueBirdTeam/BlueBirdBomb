@@ -10,12 +10,14 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class MainController extends JFrame implements KeyListener {
+public class MainController extends JFrame implements KeyListener, MouseListener {
     
     //=======================================================================================//
     //                                                                           VARIABLES                                                                                 //
@@ -24,8 +26,8 @@ public class MainController extends JFrame implements KeyListener {
     private MainVue mainVue;
     private MainModel mainModel;
     private MediaTracker tracker;
-    private int frameWidth = 970;
-    private int frameHeight = 750;
+    private int frameWidth = 647;
+    private int frameHeight = 510;
         
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -48,7 +50,7 @@ public class MainController extends JFrame implements KeyListener {
         tracker.addImage(playerImage, 0);
         
         mainModel.setPlayer(new Player(0, 0, playerImage));
-        mainModel.setMap(new Map(new MapFile(new File("map2"))));
+        mainModel.setMap(new Map(new MapFile(new File("map2.bin"))));
         tracker.addImage(mainModel.getMap().getImages()[0], 1);
         tracker.addImage(mainModel.getMap().getImages()[1], 2);
         tracker.addImage(mainModel.getMap().getImages()[2], 3);
@@ -69,6 +71,7 @@ public class MainController extends JFrame implements KeyListener {
         catch(InterruptedException e) { return; }
         
         addKeyListener(this);
+        addMouseListener(this);
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,6 +80,7 @@ public class MainController extends JFrame implements KeyListener {
     public void keyTyped(KeyEvent ke) { }
 
     @Override
+    @SuppressWarnings("CallToThreadDumpStack")
     public void keyPressed(KeyEvent ke) {
         int key = 0;
         
@@ -87,21 +91,42 @@ public class MainController extends JFrame implements KeyListener {
                 
         switch(key) {
             case KeyEvent.VK_RIGHT :
-                mainModel.moveOnX(1);
+                mainModel.moveOnX(10);
                 break;
             case KeyEvent.VK_LEFT :
-                mainModel.moveOnX(-1);
+                mainModel.moveOnX(-10);
                 break;
             case KeyEvent.VK_UP :
-                mainModel.moveOnY(-1);
+                mainModel.moveOnY(-10);
                 break;
             case KeyEvent.VK_DOWN :
-                mainModel.moveOnY(1);
+                mainModel.moveOnY(10);
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent ke) { }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        if(me.getButton() == MouseEvent.BUTTON1) System.out.println("test");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+    }
 
 }
