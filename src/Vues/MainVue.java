@@ -2,6 +2,7 @@ package Vues;
 
 import Models.MainModel;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -16,7 +17,7 @@ public class MainVue extends JPanel {
     //=======================================================================================//
     
     private MainModel mainModel;
-    private int caseSize = 60;
+    private int caseSize = 40;
     Image bg;
     
     //=======================================================================================//
@@ -37,17 +38,19 @@ public class MainVue extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
+        //Affichage du background
         g.drawImage(bg, 0, 0, this.getWidth(), this.getHeight(), this);
         
+        //Affichage des éléments
         for(int y = 0; y < mainModel.getMap().getMapTab()[0].length; y++) {
             for(int x = 0; x < mainModel.getMap().getMapTab().length; x++) {
-                g.drawImage(mainModel.getMap().getImages()[mainModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, 60, 60, this);
+                g.drawImage(mainModel.getMap().getImages()[mainModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
             }
         }
         
-        g.drawImage(mainModel.getPlayer().getPlayerImage(), mainModel.getPlayer().getxPosition()*caseSize, mainModel.getPlayer().getyPosition()*caseSize, 60, 60, this);
-       
-        
+        //Affichage du player
+        g.drawImage(mainModel.getPlayer().getPlayerImage(), mainModel.getPlayer().getxPosition(), mainModel.getPlayer().getyPosition(), caseSize, caseSize, this);
+     
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
