@@ -26,17 +26,68 @@ public class MainModel {
     //=======================================================================================//
     
     public void moveOnX(int xMoveSize) {
-        if(map.isFree(player.getxPosition() + xMoveSize, player.getyPosition())) {
-            player.moveOnX(xMoveSize);
-            mainVue.repaint();
-        }
+        boolean ok = false;
+        int casePositionX = 0, casePositionYup = 0, casePositionYdown = 0;
+        int caseSize = mainVue.getCaseSize();
+        
+        switch(xMoveSize) {
+            case 10 :
+                casePositionX = (player.getxPosition() + caseSize + xMoveSize - 1) / caseSize;
+                casePositionYup = player.getyPosition() / caseSize;
+                casePositionYdown = (player.getyPosition() + caseSize - 1) / caseSize;               
+                
+                if(map.isFree(casePositionX, casePositionYup) && map.isFree(casePositionX, casePositionYdown)) {
+                    player.moveOnX(xMoveSize);
+                    mainVue.repaint();
+                }
+                  
+                break;
+                
+            case -10 :
+                casePositionX = (player.getxPosition() + xMoveSize) / caseSize;
+                casePositionYup = (player.getyPosition() / caseSize);
+                casePositionYdown = (player.getyPosition() + caseSize - 1) / caseSize;
+                
+                if(map.isFree(casePositionX, casePositionYup) && map.isFree(casePositionX, casePositionYdown) && (player.getxPosition() + xMoveSize) >= 0) {
+                    player.moveOnX(xMoveSize);
+                    mainVue.repaint();
+                }
+                
+                break;
+        }     
     }
     
     public void moveOnY(int yMoveSize) {
-        if(map.isFree(player.getxPosition(), player.getyPosition() + yMoveSize)) {
-            player.moveOnY(yMoveSize);
-            mainVue.repaint();
-        }
+        boolean ok = false;
+        int casePositionXleft = 0, casePositionXright = 0, casePositionY = 0;
+        int caseSize = mainVue.getCaseSize();
+        
+        switch(yMoveSize) {
+            case -10 :
+                casePositionXleft = (player.getxPosition() / caseSize);
+                casePositionXright = (player.getxPosition() + caseSize - 1) / caseSize;
+                casePositionY = (player.getyPosition() + yMoveSize) / caseSize;
+                
+                if(map.isFree(casePositionXleft, casePositionY) && map.isFree(casePositionXright, casePositionY) && (player.getyPosition() + yMoveSize) >= 0) {
+                    player.moveOnY(yMoveSize);
+                    mainVue.repaint();
+                }
+                
+                break;
+                
+            case 10 :
+                casePositionXleft = (player.getxPosition() / caseSize);
+                casePositionXright = (player.getxPosition() + caseSize - 1) / caseSize;
+                casePositionY = (player.getyPosition() + caseSize + yMoveSize - 1) / caseSize;
+                
+                if(map.isFree(casePositionXleft, casePositionY) && map.isFree(casePositionXright, casePositionY)) {
+                    player.moveOnY(yMoveSize);
+                    mainVue.repaint();
+                }
+                
+                break;
+        }        
+        
     }
     
     public void putBomb() throws IOException{

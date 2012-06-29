@@ -27,7 +27,7 @@ public class Player {
     //=======================================================================================//
     
     public void moveOnX(int xMoveSize) {
-        xPosition +=xMoveSize;
+        xPosition += xMoveSize;
     }
     
     public void moveOnY(int yMoveSize) {
