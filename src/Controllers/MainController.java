@@ -26,8 +26,9 @@ public class MainController extends JFrame implements KeyListener, MouseListener
     private MainVue mainVue;
     private MainModel mainModel;
     private MediaTracker tracker;
-    private int frameWidth = 647;
-    private int frameHeight = 510;
+    private final int frameWidth = MainVue.getCaseSize() * 16 + 6;
+    private final int frameHeight = MainVue.getCaseSize() * 12 + 30;
+    private static int movesSpeed = 10;
         
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -76,6 +77,12 @@ public class MainController extends JFrame implements KeyListener, MouseListener
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Getters
+    public static int getMovesSpeed() {
+        return movesSpeed;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Méthodes héritées de l'interface KeyListener
     @Override
     public void keyTyped(KeyEvent ke) { }
@@ -92,16 +99,16 @@ public class MainController extends JFrame implements KeyListener, MouseListener
                 
         switch(key) {
             case KeyEvent.VK_RIGHT :
-                mainModel.moveOnX(10);
+                mainModel.moveOnX(movesSpeed);
                 break;
             case KeyEvent.VK_LEFT :
-                mainModel.moveOnX(-10);
+                mainModel.moveOnX(-movesSpeed);
                 break;
             case KeyEvent.VK_UP :
-                mainModel.moveOnY(-10);
+                mainModel.moveOnY(-movesSpeed);
                 break;
             case KeyEvent.VK_DOWN :
-                mainModel.moveOnY(10);
+                mainModel.moveOnY(movesSpeed);
                 break;
             case KeyEvent.VK_SPACE :
                 try {

@@ -86,7 +86,7 @@ public class MainModel {
                     player.moveOnY(yMoveSize);
                     mainVue.repaint();
                 }
-                
+               
                 break;
         }        
         
@@ -95,13 +95,13 @@ public class MainModel {
     public void putBomb() throws IOException, InterruptedException {
         Bomb bomb = new Bomb(player.getxPosition(), player.getyPosition(), bombCount);
         bomb.setMainModel(this);
-        bomb.setMainVue(mainVue);
-        
+        bomb.setMainVue(mainVue);        
         bombs[bombCount] = bomb;
         
-        bombCount++;
-        
+        mainVue.repaint();
         bomb.start();
+        
+        bombCount++;
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 package Models;
 
+import Controllers.MainController;
 import Vues.MainVue;
 import java.io.*;
 import java.awt.Image;
@@ -24,8 +25,10 @@ public class Bomb extends Thread {
     public Bomb(int xPosition, int yPosition, int id) throws IOException {
         this.id = id;
         bombImage = ImageIO.read(new File("bomb.png"));
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        
+        //La position de la bombe est calculée de façon à correspondre à la case la plus proche
+        this.xPosition = (Math.round((float) ((xPosition + MainVue.getCaseSize() + MainController.getMovesSpeed()) / MainVue.getCaseSize())) - 1) * MainVue.getCaseSize();
+        this.yPosition = (Math.round((float) ((yPosition + MainVue.getCaseSize() + MainController.getMovesSpeed()) / MainVue.getCaseSize())) - 1) * MainVue.getCaseSize();
         
     }
     

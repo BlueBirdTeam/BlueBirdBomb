@@ -16,7 +16,7 @@ public class MainVue extends JPanel {
     //=======================================================================================//
     
     private MainModel mainModel;
-    private int caseSize = 40;
+    private static int caseSize = 40;
     Image bg;
     
     //=======================================================================================//
@@ -66,7 +66,7 @@ public class MainVue extends JPanel {
         return mainModel;
     }
 
-    public int getCaseSize() {
+    public static int getCaseSize() {
         return caseSize;
     }
 
@@ -76,10 +76,7 @@ public class MainVue extends JPanel {
         this.mainModel = mainModel;
     }
 
-    public void setCaseSize(int caseSize) {
-        this.caseSize = caseSize;
-    }
-    
+  
     
     
 
