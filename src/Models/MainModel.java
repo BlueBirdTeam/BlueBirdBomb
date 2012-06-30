@@ -12,13 +12,15 @@ public class MainModel {
     private Map map;
     private Player player;
     private MainVue mainVue;
+    private static int bombCount = 0;
+    private Bomb[] bombs;
     
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
     //=======================================================================================//
     
     public MainModel() {
-        
+        bombs = new Bomb[1000];
     }    
     
     //=======================================================================================//
@@ -26,7 +28,7 @@ public class MainModel {
     //=======================================================================================//
     
     public void moveOnX(int xMoveSize) {
-        boolean ok = false;
+
         int casePositionX = 0, casePositionYup = 0, casePositionYdown = 0;
         int caseSize = mainVue.getCaseSize();
         
@@ -58,7 +60,7 @@ public class MainModel {
     }
     
     public void moveOnY(int yMoveSize) {
-        boolean ok = false;
+
         int casePositionXleft = 0, casePositionXright = 0, casePositionY = 0;
         int caseSize = mainVue.getCaseSize();
         
@@ -90,9 +92,16 @@ public class MainModel {
         
     }
     
-    public void putBomb() throws IOException{
-        player.putBomb();
-        mainVue.repaint();
+    public void putBomb() throws IOException, InterruptedException {
+        Bomb bomb = new Bomb(player.getxPosition(), player.getyPosition(), bombCount);
+        bomb.setMainModel(this);
+        bomb.setMainVue(mainVue);
+        
+        bombs[bombCount] = bomb;
+        
+        bombCount++;
+        
+        bomb.start();
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -108,6 +117,14 @@ public class MainModel {
     public MainVue getMainVue() {
         return mainVue;
     }
+    
+    public static int getBombCount() {
+        return bombCount;
+    }
+    
+    public Bomb[] getBombs() {
+        return bombs;
+    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Setters
@@ -122,7 +139,7 @@ public class MainModel {
     public void setMainVue(MainVue mainVue) {
         this.mainVue = mainVue;
     }
-    
+  
     
 
 }

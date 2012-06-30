@@ -33,10 +33,6 @@ public class Player {
     public void moveOnY(int yMoveSize) {
         yPosition += yMoveSize;
     }
-    
-    public void putBomb() throws IOException {
-        new Bomb(getxPosition(), getyPosition());
-    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Getters
@@ -51,7 +47,7 @@ public class Player {
     public Image getPlayerImage() {
         return playerImage;
     }
-
+  
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Setters
     public void setxPosition(int xPosition) {
@@ -65,6 +61,7 @@ public class Player {
     public void setPlayerImage(Image playerImage) {
         this.playerImage = playerImage;
     }
+ 
     
     
 

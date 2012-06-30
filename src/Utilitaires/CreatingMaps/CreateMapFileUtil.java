@@ -1,6 +1,7 @@
-package Utilitaires;
+package Utilitaires.CreatingMaps;
 
 import Files.MapFile;
+import Utilitaires.Scan;
 import java.io.File;
 import java.io.IOException;
 
