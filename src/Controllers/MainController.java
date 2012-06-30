@@ -58,6 +58,7 @@ public class MainController extends JFrame implements KeyListener, MouseListener
         mainVue = new MainVue(mainModel);        
         mainModel.setMainVue(mainVue);
         
+        setTitle("BlueBirdBomb");
         setSize(frameWidth, frameHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().add(mainVue);
@@ -101,6 +102,12 @@ public class MainController extends JFrame implements KeyListener, MouseListener
                 break;
             case KeyEvent.VK_DOWN :
                 mainModel.moveOnY(10);
+                break;
+            case KeyEvent.VK_SPACE :
+                try {
+                    mainModel.putBomb();
+                }
+                catch(IOException | InterruptedException e) {}
                 break;
         }
     }
