@@ -1,7 +1,6 @@
 package Files;
 
 import java.io.*;
-import java.util.*;
 import Utilitaires.*;
 
 public class MapFile extends FileIO {

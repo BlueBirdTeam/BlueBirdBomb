@@ -1,87 +1,82 @@
-package Vues;
+package Utilitaires.CreatingMaps;
 
-import Models.MainModel;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class MainVue extends JPanel {
+public class Panel extends JPanel {
     
     //=======================================================================================//
     //                                                                           VARIABLES                                                                                 //
     //=======================================================================================//
     
-    private MainModel mainModel;
+    private CreationWindow creationWindow;
+    private Image bg;
+    private JTextField champ;
     private int caseSize = 40;
-    Image bg;
+    private int imageNb;
     
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
     //=======================================================================================//
     
-    public MainVue(MainModel mainModel) throws IOException {
-        this.mainModel = mainModel;
-        bg = ImageIO.read(new File("background.png"));
-        setBackground(Color.BLACK);
+    public Panel() throws IOException {
+        setLayout(null);
+        
+        bg = ImageIO.read(new File("BackGround.png"));
+        
+        champ = new JTextField("0");
+        champ.setBounds(0, 0, 20, 20);
+        add(champ);
     }
     
     //=======================================================================================//
     //                                                                              METHODS                                                                                //
     //=======================================================================================//
     
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------PaintComponent
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        //Affichage du background
         g.drawImage(bg, 0, 0, this.getWidth(), this.getHeight(), this);
         
-        //Affichage des éléments
-        for(int y = 0; y < mainModel.getMap().getMapTab()[0].length; y++) {
-            for(int x = 0; x < mainModel.getMap().getMapTab().length; x++) {
-                g.drawImage(mainModel.getMap().getImages()[mainModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
+        for(int y = 0; y < 12; y++) {
+            for(int x = 0; x < 16; x++) {
+                g.drawImage(creationWindow.getImages()[creationWindow.getMatrix()[y][x]], x*caseSize + 150, y*caseSize + 100, caseSize, caseSize, this);
             }
         }
         
-        //Affichage des bombe
-        if(MainModel.getBombCount() > 0) {
-            for(int i = 0; i < MainModel.getBombCount(); i++)
-                if(mainModel.getBombs()[i] != null) {
-                    g.drawImage(mainModel.getBombs()[i].getImage(), mainModel.getBombs()[i].getxPosition(), mainModel.getBombs()[i].getyPosition(), caseSize, caseSize, this);
-                }
-        }
+        String test = String.valueOf(imageNb);
         
-        //Affichage du player
-        g.drawImage(mainModel.getPlayer().getPlayerImage(), mainModel.getPlayer().getxPosition(), mainModel.getPlayer().getyPosition(), caseSize, caseSize, this);
-     
+        g.drawString(String.valueOf(imageNb), 120, 120);
+        
+        
+        
     }
-
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //----------Getters
-    public MainModel getMainModel() {
-        return mainModel;
-    }
-
-    public int getCaseSize() {
-        return caseSize;
-    }
-
+    
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Setters
-    public void setMainModel(MainModel mainModel) {
-        this.mainModel = mainModel;
-    }
-
-    public void setCaseSize(int caseSize) {
-        this.caseSize = caseSize;
+    public void setCreationWindow(CreationWindow creationWindow) {
+        this.creationWindow = creationWindow;
     }
     
+    public void setImageNb(int imageNb) {
+        this.imageNb = imageNb;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Getters
+    public int getImageNb() {
+        return Integer.parseInt(champ.getText());
+    }
     
     
-
+    
 
 }
