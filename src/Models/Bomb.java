@@ -78,7 +78,6 @@ public class Bomb extends Thread {
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Calcul du blaster
     private void calculateBlaster() {
-        System.out.println(gameModel.getMap().getMapTab()[0][0]);
                
         //Initialisation du blaster        
         for(int i = 0; i < 8; i++) {
