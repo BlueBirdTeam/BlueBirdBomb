@@ -74,11 +74,16 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         gameVue.getFloatingCloud().start();
         
         //Lancement de la barre de statistiques
-        Thread startBarThread = new Thread(statBar);
+        Thread statBarThread = new Thread(statBar);
+        statBarThread.start();
         
         //Ajout des listeners
         addKeyListener(this);
         addMouseListener(this);
+        
+        while(true) {
+            repaint();
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

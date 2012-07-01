@@ -24,7 +24,7 @@ public class StatBar extends JPanel implements Runnable {
     //=======================================================================================//
     
     private Image bg, life, timer;
-    private int time = 60;
+    private int time;
     
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -58,10 +58,9 @@ public class StatBar extends JPanel implements Runnable {
         
     @Override
     public void run() {
-        while(true) {
+        while(true) {            
             do {
                 time--;
-                this.repaint();
                 try {
                     Thread.sleep((long) 1000);
                 } catch (InterruptedException ex) { System.out.println("erreur"); }
@@ -80,4 +79,6 @@ public class StatBar extends JPanel implements Runnable {
     public Image getImageTimer() {
         return timer;
     }
+    
+ 
 }
