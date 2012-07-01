@@ -4,7 +4,9 @@ import Files.MapFile;
 import Models.GameModel;
 import Models.Map;
 import Models.Player;
+import Models.StatBar;
 import Vues.GameVue;
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -25,7 +27,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     private GameVue gameVue;
     private GameModel gameModel;
     private final static int frameWidth = GameVue.getCaseSize() * 16 + 146;
-    private final static int frameHeight = GameVue.getCaseSize() * 12 - 12;
+    private final static int frameHeight = GameVue.getCaseSize() * 12 + 30;
     private static int movesSpeed = 10;
         
     //=======================================================================================//
@@ -50,13 +52,19 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         gameModel.setMap(new Map(new MapFile(new File("map2.bin"))));
         
         //Création de la gameVue
-        gameVue = new GameVue(gameModel);        
+        gameVue = new GameVue(gameModel);
         gameModel.setGameVue(gameVue);
+        gameVue.setBounds(0, 0, 646, 510);
+        
+        //Création de la barre de la StatBar
+        StatBar statBar = new StatBar();
+        statBar.setBounds(646, 0, 140, 440);
         
         //Configuration de la fenêtre principale
         setTitle("BlueBirdBomb");        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().add(gameVue);
+        getContentPane().add(statBar);
         setSize(frameWidth, frameHeight);
         setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frameWidth)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - frameHeight)/2);
         setResizable(false);
@@ -66,7 +74,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         gameVue.getFloatingCloud().start();
         
         //Lancement de la barre de statistiques
-        gameVue.getStatBar().start();
+        Thread startBarThread = new Thread(statBar);
         
         //Ajout des listeners
         addKeyListener(this);
