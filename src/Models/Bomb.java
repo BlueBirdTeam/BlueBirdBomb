@@ -63,8 +63,6 @@ public class Bomb extends Thread {
              try {
                 setImage(ImageIO.read(new File(fileName + i + ".png")));
              }catch(IOException e) {}
-             
-            gameVue.repaint();
             
             try {    
                 sleep((long) 50);
