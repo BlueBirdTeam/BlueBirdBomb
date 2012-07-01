@@ -45,15 +45,15 @@ public class FloatingCloud extends Thread {
         while(true) {
             do{                
                 i++;
-                xPosition -= i;
+                xPosition -= 1;
                 
                 gameVue.repaint();
                 
                 try {
-                    sleep(100);
+                    sleep((long) 50);
                 } catch (InterruptedException ex) {System.out.println("erreur"); }
             
-            } while(i < 50);
+            } while(i < (646 + 230));
             
             i = 0;
             xPosition = 646;

@@ -26,7 +26,7 @@ public class Map {
         
         images = new Image[3];
         
-        Image empty = ImageIO.read(new File("translucent.png"));
+        Image empty = ImageIO.read(new File("grille.png"));
         Image brick = ImageIO.read(new File("nuage.png"));
         Image wall = ImageIO.read(new File("wall.png"));
 
