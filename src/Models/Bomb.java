@@ -37,6 +37,7 @@ public class Bomb extends Thread {
         //Calcul des cases devant accueilir le "souffle" de la bombe
         blaster = new int[8][3];
         calculateBlaster();
+        destroyBricks();
         
     }
     
@@ -111,39 +112,45 @@ public class Bomb extends Thread {
         blaster[7][0] = this.xPosition;
         blaster[7][1] = this.yPosition + 2 * GameVue.getCaseSize();
         
-        //Déterminer si le blast doit être affiché (s'il n'est pas bloqué par un objet)
-        if(gameModel.getMap().isFree((this.xPosition - GameVue.getCaseSize()) / GameVue.getCaseSize(), this.yPosition / GameVue.getCaseSize())) {            
-            blaster[0][2] = 1;
+        //Déterminer si le blast doit être affiché (s'il n'est pas bloqué par un objet)        
+        int caseI, caseIplus;
+        
+        for(int i = 0; i < 8; i += 2) {
             
-            if(gameModel.getMap().isFree((this.xPosition - 2 * GameVue.getCaseSize()) / GameVue.getCaseSize(), this.yPosition / GameVue.getCaseSize())) {
-                blaster[1][2] = 1;
+            if(blaster[i][0] >= 0 && blaster[i][0] < 16 * GameVue.getCaseSize() && blaster[i][1] >= 0 && blaster[i][1] < 12 * GameVue.getCaseSize()) {
+                
+                caseI = gameModel.getMap().getMapTab()[blaster[i][1] / 40][blaster[i][0] / 40];
+               
+                if(caseI != 2) {
+                    blaster[i][2] = 1;
+                    
+                    if(blaster[i + 1][0] >= 0 && blaster[i + 1][0] < 16 * GameVue.getCaseSize() && blaster[i + 1][1] >= 0 && blaster[i + 1][1] < 12 * GameVue.getCaseSize()) {
+                        caseIplus = gameModel.getMap().getMapTab()[blaster[i + 1][1] / 40][blaster[i + 1][0] / 40];
+                        
+                        if(caseI != 1 && caseIplus != 2) blaster[i + 1][2] = 1;
+                    }
+                }
             }
         }
-        
-        if(gameModel.getMap().isFree(this.xPosition / GameVue.getCaseSize(), (this.yPosition - GameVue.getCaseSize()) / GameVue.getCaseSize())) {
-            blaster[2][2] = 1;
-            
-            if(gameModel.getMap().isFree(this.xPosition / GameVue.getCaseSize(), (this.yPosition - 2 * GameVue.getCaseSize()) / GameVue.getCaseSize())) {
-                blaster[3][2] = 1;
-            }
-        }
-        
-        if(gameModel.getMap().isFree((this.xPosition + GameVue.getCaseSize()) / GameVue.getCaseSize(), this.yPosition / GameVue.getCaseSize())) {
-            blaster[4][2] = 1;
-            
-            if(gameModel.getMap().isFree((this.xPosition + 2 * GameVue.getCaseSize()) / GameVue.getCaseSize(), this.yPosition / GameVue.getCaseSize())) {
-                blaster[5][2] = 1;
-            }
-        }
-        
-        if(gameModel.getMap().isFree(this.xPosition / GameVue.getCaseSize(), (this.yPosition + GameVue.getCaseSize()) / GameVue.getCaseSize())) {
-            blaster[6][2] = 1;
-            
-            if(gameModel.getMap().isFree(this.xPosition / GameVue.getCaseSize(), (this.yPosition + 2 * GameVue.getCaseSize()) / GameVue.getCaseSize())) {
-                blaster[7][2] = 1;
-            }
-        }       
     }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Détruit les blocks touchés par le blaster
+    private void destroyBricks() {
+        int line, col;
+        
+        for(int i = 0; i < 8; i++) {
+            if(blaster[i][2] == 1) {
+                line = blaster[i][1] / 40;
+                col = blaster[i][0] / 40;
+                
+                if(gameModel.getMap().getMapTab()[line][col] == 1) gameModel.getMap().getMapTab()[line][col] = 0;
+            }
+        }
+    }
+    
+    
+    
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Getters
