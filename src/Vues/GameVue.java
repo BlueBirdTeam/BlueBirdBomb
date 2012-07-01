@@ -1,6 +1,7 @@
 package Vues;
 
-import Models.MainModel;
+import Models.FloatingCloud;
+import Models.GameModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,23 +10,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class MainVue extends JPanel {
+public class GameVue extends JPanel {
     
     //=======================================================================================//
     //                                                                           VARIABLES                                                                                 //
     //=======================================================================================//
     
-    private MainModel mainModel;
+    private GameModel gameModel;
     private static int caseSize = 40;
     Image bg;
+    FloatingCloud floatingCloud;
     
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
     //=======================================================================================//
     
-    public MainVue(MainModel mainModel) throws IOException {
-        this.mainModel = mainModel;
+    public GameVue(GameModel gameModel) throws IOException {
+        this.gameModel = gameModel;
         bg = ImageIO.read(new File("background.png"));
+        floatingCloud = new FloatingCloud();
+        floatingCloud.setGameVue(this);
         setBackground(Color.BLACK);
     }
     
@@ -41,39 +45,46 @@ public class MainVue extends JPanel {
         g.drawImage(bg, 0, 0, this.getWidth(), this.getHeight(), this);
         
         //Affichage des éléments
-        for(int y = 0; y < mainModel.getMap().getMapTab()[0].length; y++) {
-            for(int x = 0; x < mainModel.getMap().getMapTab().length; x++) {
-                g.drawImage(mainModel.getMap().getImages()[mainModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
+        for(int y = 0; y < gameModel.getMap().getMapTab()[0].length; y++) {
+            for(int x = 0; x < gameModel.getMap().getMapTab().length; x++) {
+                g.drawImage(gameModel.getMap().getImages()[gameModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
             }
         }
         
         //Affichage des bombe
-        if(MainModel.getBombCount() > 0) {
-            for(int i = 0; i < MainModel.getBombCount(); i++)
-                if(mainModel.getBombs()[i] != null) {
-                    g.drawImage(mainModel.getBombs()[i].getImage(), mainModel.getBombs()[i].getxPosition(), mainModel.getBombs()[i].getyPosition(), caseSize, caseSize, this);
+        if(GameModel.getBombCount() > 0) {
+            for(int i = 0; i < GameModel.getBombCount(); i++)
+                if(gameModel.getBombs()[i] != null) {
+                    g.drawImage(gameModel.getBombs()[i].getImage(), gameModel.getBombs()[i].getxPosition(), gameModel.getBombs()[i].getyPosition(), caseSize, caseSize, this);
                 }
         }
         
         //Affichage du player
-        g.drawImage(mainModel.getPlayer().getPlayerImage(), mainModel.getPlayer().getxPosition(), mainModel.getPlayer().getyPosition(), caseSize, caseSize, this);
+        g.drawImage(gameModel.getPlayer().getPlayerImage(), gameModel.getPlayer().getxPosition(), gameModel.getPlayer().getyPosition(), caseSize, caseSize, this);
+        
+        //Affichage des nuages flottants
+        g.drawImage(floatingCloud.getImage(), floatingCloud.getxPosition(), floatingCloud.getyPosition(), 230, 135, this);
      
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Getters
-    public MainModel getMainModel() {
-        return mainModel;
+    public GameModel getGameModel() {
+        return gameModel;
     }
 
     public static int getCaseSize() {
         return caseSize;
     }
+    
+    public FloatingCloud getFloatingCloud() {
+        return floatingCloud;
+    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Setters
-    public void setMainModel(MainModel mainModel) {
-        this.mainModel = mainModel;
+    public void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
   
