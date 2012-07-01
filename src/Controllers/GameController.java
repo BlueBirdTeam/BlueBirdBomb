@@ -24,8 +24,8 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     
     private GameVue gameVue;
     private GameModel gameModel;
-    private final int frameWidth = GameVue.getCaseSize() * 16 + 6;
-    private final int frameHeight = GameVue.getCaseSize() * 12 + 30;
+    private final static int frameWidth = GameVue.getCaseSize() * 16 + 146;
+    private final static int frameHeight = GameVue.getCaseSize() * 12 - 12;
     private static int movesSpeed = 10;
         
     //=======================================================================================//
@@ -65,6 +65,9 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         //Lancement des nuages flottants
         gameVue.getFloatingCloud().start();
         
+        //Lancement de la barre de statistiques
+        gameVue.getStatBar().start();
+        
         //Ajout des listeners
         addKeyListener(this);
         addMouseListener(this);
@@ -74,6 +77,14 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     //----------Getters
     public static int getMovesSpeed() {
         return movesSpeed;
+    }
+    
+    public static int getFrameWidth() {
+        return frameWidth;
+    }
+    
+    public static int getFrameHeight() {
+        return frameHeight;
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
