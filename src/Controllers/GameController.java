@@ -25,7 +25,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     private GameVue gameVue;
     private GameModel gameModel;
     private final static int frameWidth = GameVue.getCaseSize() * 16 + 146;
-    private final static int frameHeight = GameVue.getCaseSize() * 12 - 12;
+    private final static int frameHeight = GameVue.getCaseSize() * 12 + 30;
     private static int movesSpeed = 10;
         
     //=======================================================================================//

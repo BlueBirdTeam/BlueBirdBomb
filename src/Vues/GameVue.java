@@ -70,7 +70,7 @@ public class GameVue extends JPanel {
                     }
                 }
         }
-        
+
         //Affichage du player
         g.drawImage(gameModel.getPlayer().getPlayerImage(), gameModel.getPlayer().getxPosition(), gameModel.getPlayer().getyPosition(), caseSize, caseSize, this);
         
