@@ -33,8 +33,6 @@ public class GameVue extends JPanel {
         bg = ImageIO.read(new File("background.png"));
         floatingCloud = new FloatingCloud();
         floatingCloud.setGameVue(this);
-        statBar = new StatBar();
-        statBar.setGameVue(this);
         setBackground(Color.BLACK);
     }
     
@@ -47,7 +45,7 @@ public class GameVue extends JPanel {
         super.paintComponent(g);
         
         //Affichage du background
-        g.drawImage(bg, 0, 0, this.getWidth() -140, this.getHeight(), this);
+        g.drawImage(bg, 0, 0, this.getWidth(), this.getHeight(), this);
         
         //Affichage des éléments
         for(int y = 0; y < gameModel.getMap().getMapTab()[0].length; y++) {
@@ -76,17 +74,7 @@ public class GameVue extends JPanel {
         
         //Affichage des nuages flottants
         g.drawImage(floatingCloud.getImage(), floatingCloud.getxPosition(), floatingCloud.getyPosition(), 230, 135, this);
-     
-        // Affichage de la barre de statistiques
-        g.drawImage(statBar.getImage(), 640, 0, 140, 440, this);
-        Font font = new Font("Helvetica-bold", Font.BOLD, 15);
-        g.setFont(font);
-        g.setColor(Color.white);
-        g.drawString("Statistiques", 667, 50);
-        g.drawImage(statBar.getImageLife(), 647, 80, 20, 20, this);
-        g.drawString("x 3", 670, 95);
-        g.drawImage(statBar.getImageTimer(), 647, 110, 20, 20, this);
-        g.drawString("00:59", 672, 127);
+    
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
