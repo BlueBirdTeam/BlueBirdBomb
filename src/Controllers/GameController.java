@@ -1,12 +1,11 @@
 package Controllers;
 
 import Files.MapFile;
-import Models.MainModel;
+import Models.GameModel;
 import Models.Map;
 import Models.Player;
-import Vues.MainVue;
+import Vues.GameVue;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -17,62 +16,64 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class MainController extends JFrame implements KeyListener, MouseListener {
+public class GameController extends JFrame implements KeyListener, MouseListener {
     
     //=======================================================================================//
     //                                                                           VARIABLES                                                                                 //
     //=======================================================================================//
     
-    private MainVue mainVue;
-    private MainModel mainModel;
-    private MediaTracker tracker;
-    private int frameWidth = 647;
-    private int frameHeight = 510;
+    private GameVue gameVue;
+    private GameModel gameModel;
+    private final int frameWidth = GameVue.getCaseSize() * 16 + 6;
+    private final int frameHeight = GameVue.getCaseSize() * 12 + 30;
+    private static int movesSpeed = 10;
         
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
     //=======================================================================================//
     
-    public MainController() throws IOException {
-        mainModel = new MainModel();
+    public GameController() throws IOException {
+        gameModel = new GameModel();
         initialize();
-    }
-    
+    }    
     
     //=======================================================================================//
     //                                                                              METHODS                                                                                //
     //=======================================================================================//
     
     private void initialize() throws IOException {
-        tracker = new MediaTracker(this);
-        
+        //Initialiser l'image du player
         Image playerImage = ImageIO.read(new File("player.png"));
-        tracker.addImage(playerImage, 0);
         
-        mainModel.setPlayer(new Player(0, 0, playerImage));
-        mainModel.setMap(new Map(new MapFile(new File("map2.bin"))));
-        tracker.addImage(mainModel.getMap().getImages()[0], 1);
-        tracker.addImage(mainModel.getMap().getImages()[1], 2);
-        tracker.addImage(mainModel.getMap().getImages()[2], 3);
+        //Attribuer une map et un player au gameModel
+        gameModel.setPlayer(new Player(0, 0, playerImage));
+        gameModel.setMap(new Map(new MapFile(new File("map2.bin"))));
         
-        mainVue = new MainVue(mainModel);        
-        mainModel.setMainVue(mainVue);
+        //Création de la gameVue
+        gameVue = new GameVue(gameModel);        
+        gameModel.setGameVue(gameVue);
         
-        setTitle("BlueBirdBomb");
-        setSize(frameWidth, frameHeight);
+        //Configuration de la fenêtre principale
+        setTitle("BlueBirdBomb");        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().add(mainVue);
+        getContentPane().add(gameVue);
+        setSize(frameWidth, frameHeight);
         setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - frameWidth)/2, (Toolkit.getDefaultToolkit().getScreenSize().height - frameHeight)/2);
         setResizable(false);
         setVisible(true);
         
-        try {
-            tracker.waitForAll();
-        }
-        catch(InterruptedException e) { return; }
+        //Lancement des nuages flottants
+        gameVue.getFloatingCloud().start();
         
+        //Ajout des listeners
         addKeyListener(this);
         addMouseListener(this);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Getters
+    public static int getMovesSpeed() {
+        return movesSpeed;
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -81,31 +82,30 @@ public class MainController extends JFrame implements KeyListener, MouseListener
     public void keyTyped(KeyEvent ke) { }
 
     @Override
-    @SuppressWarnings("CallToThreadDumpStack")
     public void keyPressed(KeyEvent ke) {
         int key = 0;
         
         try {
             key = ke.getKeyCode();
         }
-        catch(UnsupportedOperationException e) {e.printStackTrace();}
+        catch(UnsupportedOperationException e) { }
                 
         switch(key) {
-            case KeyEvent.VK_RIGHT :
-                mainModel.moveOnX(10);
+            case KeyEvent.VK_RIGHT : //Mouvement vers la droite
+                gameModel.moveOnX(movesSpeed);
                 break;
-            case KeyEvent.VK_LEFT :
-                mainModel.moveOnX(-10);
+            case KeyEvent.VK_LEFT : //Mouvement vers la gauche
+                gameModel.moveOnX(-movesSpeed);
                 break;
-            case KeyEvent.VK_UP :
-                mainModel.moveOnY(-10);
+            case KeyEvent.VK_UP : //Mouvement vers le haut
+                gameModel.moveOnY(-movesSpeed);
                 break;
-            case KeyEvent.VK_DOWN :
-                mainModel.moveOnY(10);
+            case KeyEvent.VK_DOWN : //Mouvement vers le bas
+                gameModel.moveOnY(movesSpeed);
                 break;
-            case KeyEvent.VK_SPACE :
+            case KeyEvent.VK_SPACE : //Déposer une bombe
                 try {
-                    mainModel.putBomb();
+                    gameModel.putBomb();
                 }
                 catch(IOException | InterruptedException e) {}
                 break;
@@ -115,6 +115,9 @@ public class MainController extends JFrame implements KeyListener, MouseListener
     @Override
     public void keyReleased(KeyEvent ke) { }
 
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Méthodes héritées de l'interface MouseListener
     @Override
     public void mouseClicked(MouseEvent me) {
         if(me.getButton() == MouseEvent.BUTTON1) System.out.println("test");
