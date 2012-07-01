@@ -39,7 +39,7 @@ public class GameModel {
     //=======================================================================================//
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //----------Gestion des déplacements su l'axe X
+    //----------Gestion des déplacements sur l'axe X
     public void moveOnX(int xMoveSize) { 
 
         int casePositionX = 0, casePositionYup = 0, casePositionYdown = 0;
@@ -110,8 +110,7 @@ public class GameModel {
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Gestion des dépôts de bombes
     public void putBomb() throws IOException, InterruptedException { 
-        Bomb bomb = new Bomb(player.getxPosition(), player.getyPosition(), bombCount);
-        bomb.setGameModel(this);
+        Bomb bomb = new Bomb(player.getxPosition(), player.getyPosition(), bombCount, this);
         bomb.setGameVue(gameVue);        
         bombs[bombCount] = bomb;
         

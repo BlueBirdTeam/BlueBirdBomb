@@ -61,6 +61,13 @@ public class GameVue extends JPanel {
             for(int i = 0; i < GameModel.getBombCount(); i++)
                 if(gameModel.getBombs()[i] != null) {
                     g.drawImage(gameModel.getBombs()[i].getImage(), gameModel.getBombs()[i].getxPosition(), gameModel.getBombs()[i].getyPosition(), caseSize, caseSize, this);
+                    
+                    //Affichage du blaster
+                    for(int i2 = 0; i2 < 8; i2++) {
+                        if(gameModel.getBombs()[i].getBlaster()[i2][2] == 1 && gameModel.getBombs()[i].hasExplosed()) {
+                            g.drawImage(gameModel.getBombs()[i].getImage(), gameModel.getBombs()[i].getBlaster()[i2][0], gameModel.getBombs()[i].getBlaster()[i2][1], caseSize, caseSize, this);
+                        }
+                    }
                 }
         }
         
