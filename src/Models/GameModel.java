@@ -53,7 +53,6 @@ public class GameModel {
                 
                 if(map.isFree(casePositionX, casePositionYup) && map.isFree(casePositionX, casePositionYdown)) {
                     player.moveOnX(xMoveSize);
-                    gameVue.repaint();
                 }
                   
                 break;
@@ -65,7 +64,6 @@ public class GameModel {
                 
                 if(map.isFree(casePositionX, casePositionYup) && map.isFree(casePositionX, casePositionYdown) && (player.getxPosition() + xMoveSize) >= 0) {
                     player.moveOnX(xMoveSize);
-                    gameVue.repaint();
                 }
                 
                 break;
@@ -87,7 +85,6 @@ public class GameModel {
                 
                 if(map.isFree(casePositionXleft, casePositionY) && map.isFree(casePositionXright, casePositionY) && (player.getyPosition() + yMoveSize) >= 0) {
                     player.moveOnY(yMoveSize);
-                    gameVue.repaint();
                 }
                 
                 break;
@@ -99,7 +96,6 @@ public class GameModel {
                 
                 if(map.isFree(casePositionXleft, casePositionY) && map.isFree(casePositionXright, casePositionY)) {
                     player.moveOnY(yMoveSize);
-                    gameVue.repaint();
                 }
                
                 break;
@@ -114,7 +110,6 @@ public class GameModel {
         bomb.setGameVue(gameVue);        
         bombs[bombCount] = bomb;
         
-        gameVue.repaint();
         bomb.start();
         
         bombCount++;
