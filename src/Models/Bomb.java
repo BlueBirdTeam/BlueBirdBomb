@@ -123,6 +123,7 @@ public class Bomb extends Thread {
                     blaster[i][2] = 1;
                     
                     if(blaster[i + 1][0] >= 0 && blaster[i + 1][0] < 16 * GameVue.getCaseSize() && blaster[i + 1][1] >= 0 && blaster[i + 1][1] < 12 * GameVue.getCaseSize()) {
+                        
                         caseIplus = gameModel.getMap().getMapTab()[blaster[i + 1][1] / 40][blaster[i + 1][0] / 40];
                         
                         if(caseI != 1 && caseIplus != 2) blaster[i + 1][2] = 1;
@@ -134,15 +135,25 @@ public class Bomb extends Thread {
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Détruit les blocks touchés par le blaster
-    private void destroyBricks() {
+    private void destroyBricks() throws IOException {
         int line, col;
+        BrickExplosion explosion;
         
         for(int i = 0; i < 8; i++) {
             if(blaster[i][2] == 1) {
                 line = blaster[i][1] / 40;
                 col = blaster[i][0] / 40;
                 
-                if(gameModel.getMap().getMapTab()[line][col] == 1) gameModel.getMap().getMapTab()[line][col] = 0;
+                //Retirer la brique de la map
+                if(gameModel.getMap().getMapTab()[line][col] == 1) {
+                    
+                    gameModel.getMap().getMapTab()[line][col] = 3;
+                
+                    //Ajouter une explosion à la liste du gameModel et lancer l'animation
+                    explosion = new BrickExplosion(GameModel.getExplosionCount(), blaster[i][0], blaster[i][1], gameModel);
+                    gameModel.addExplosion(explosion);
+                    explosion.start();                
+                }
             }
         }
     }
