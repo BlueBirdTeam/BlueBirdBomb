@@ -13,8 +13,10 @@ public class GameModel {
     private Player player;
     private GameVue gameVue;
     private static int bombCount = 0;
+    private static int explosionCount = 0;
     private Bomb[] bombs;
     private FloatingCloud[] floatingClouds;
+    private BrickExplosion[] brickExplosions;
     
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -22,6 +24,7 @@ public class GameModel {
     
     public GameModel() {
         bombs = new Bomb[1000];
+        brickExplosions = new BrickExplosion[1000];
         floatingClouds = new FloatingCloud[1000];
     }    
     
@@ -114,6 +117,13 @@ public class GameModel {
         
         bombCount++;
     }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Gestion des explosions
+    public void addExplosion(BrickExplosion explosion) {
+        brickExplosions[explosionCount] = explosion;
+        explosionCount++;
+    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //----------Getters
@@ -135,6 +145,14 @@ public class GameModel {
     
     public Bomb[] getBombs() {
         return bombs;
+    }
+    
+    public static int getExplosionCount() {
+        return explosionCount;
+    }
+    
+    public BrickExplosion[] getExplosions() {
+        return brickExplosions;
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

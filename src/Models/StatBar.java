@@ -65,7 +65,8 @@ public class StatBar extends JPanel implements Runnable {
                     Thread.sleep((long) 1000);
                 } catch (InterruptedException ex) { System.out.println("erreur"); }
             } while(time <= 60);
-        }   
+            
+        }
     }
     
     public Image getImage() {
