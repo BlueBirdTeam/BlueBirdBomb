@@ -24,7 +24,7 @@ public class Map {
         this.mapFile = mapFile;
         this.mapTab = mapFile.readMap();
         
-        images = new Image[3];
+        images = new Image[4];
         
         Image empty = ImageIO.read(new File("translucent.png"));
         Image brick = ImageIO.read(new File("nuage.png"));
@@ -44,6 +44,7 @@ public class Map {
     public boolean isFree(int casePositionX, int casePositionY) {
         if(casePositionX < 0 || casePositionX >= mapFile.getNbCol() || casePositionY < 0 || casePositionY >= mapFile.getNbLine()) return false; //Si la case dépasse les limites de la fenêtre, alors false
         else if(mapTab[casePositionY][casePositionX] == 1 || mapTab[casePositionY][casePositionX] == 2) return false; //Si la case est un mur ou une brique alors faux
+        else if(mapTab[casePositionY][casePositionX] == 3) return false; //Si la case est en train d'exploser alors faux
         else return true; //Sinon vrai
     }
 

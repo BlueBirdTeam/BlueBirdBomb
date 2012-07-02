@@ -50,9 +50,11 @@ public class GameVue extends JPanel {
         //Affichage des éléments
         for(int y = 0; y < gameModel.getMap().getMapTab()[0].length; y++) {
             for(int x = 0; x < gameModel.getMap().getMapTab().length; x++) {
-                g.drawImage(gameModel.getMap().getImages()[gameModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
+                if(gameModel.getMap().getMapTab()[x][y] != 4) g.drawImage(gameModel.getMap().getImages()[gameModel.getMap().getMapTab()[x][y]], y*caseSize, x*caseSize, caseSize, caseSize, this);
             }
         }
+        
+       
         
         //Affichage des bombe
         if(GameModel.getBombCount() > 0) {
@@ -68,6 +70,15 @@ public class GameVue extends JPanel {
                     }
                 }
         }
+         //Affichage des destructions
+        if(GameModel.getExplosionCount() > 0) {
+            for(int i = 0; i < GameModel.getExplosionCount(); i++) {
+                if(gameModel.getExplosions()[i] != null) {
+                    g.drawImage(gameModel.getExplosions()[i].getImage(), gameModel.getExplosions()[i].getPosX(), gameModel.getExplosions()[i].getPosY(), caseSize, caseSize, this);
+                }
+            }
+        }
+        
 
         //Affichage du player
         g.drawImage(gameModel.getPlayer().getPlayerImage(), gameModel.getPlayer().getxPosition(), gameModel.getPlayer().getyPosition(), caseSize, caseSize, this);
