@@ -18,7 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class GameController extends JFrame implements KeyListener, MouseListener {
+public class GameController extends JFrame implements KeyListener, MouseListener, Runnable {
     
     //=======================================================================================//
     //                                                                           VARIABLES                                                                                 //
@@ -80,9 +80,19 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         //Ajout des listeners
         addKeyListener(this);
         addMouseListener(this);
-        
+       
+    }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Run Thread
+    @Override
+    @SuppressWarnings("SleepWhileInLoop")
+    public void run() {
         while(true) {
             repaint();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {}
         }
     }
     
