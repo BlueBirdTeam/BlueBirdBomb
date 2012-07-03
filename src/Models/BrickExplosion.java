@@ -40,10 +40,13 @@ public class BrickExplosion extends Thread {
     @Override
     public void run() {
         String path;
+        
+        //Attendre l'explosion de la bombe
         try {
             sleep(1500);
         } catch (InterruptedException ex) {}
         
+        //Afficher l'animation
         for(int i = 1; i < 11; i++) {
             path = "brickExplosion/bExp" + i + ".png";
             
@@ -52,17 +55,24 @@ public class BrickExplosion extends Thread {
             }
             catch(IOException e) {System.out.println("erreur");}
             
+            //Libérer l'accès à la case avant que l'étoile n'apparaisse
+            if(i == 8) {
+                gameModel.getMap().getMapTab()[posY / 40][posX / 40] = 0; 
+            }
+            
+            //Laisser un intervalle de 50ms entre chaque image
             try {
-                sleep(100);
+                sleep(50);
             } catch (InterruptedException e) {}
         }
         
+        //Laisser afficher la dernière image pour un meilleur effet viseul
         try {
-            sleep(300);
+            sleep(150);
         } catch (InterruptedException ex) {}
         
+        //Retirer l'explosion de la liste du gameModel
         gameModel.getExplosions()[nb] = null;
-        gameModel.getMap().getMapTab()[posY / 40][posX / 40] = 0;
         
     }
 
