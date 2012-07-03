@@ -62,13 +62,13 @@ public class BrickExplosion extends Thread {
             
             //Laisser un intervalle de 50ms entre chaque image
             try {
-                sleep(50);
+                sleep(30);
             } catch (InterruptedException e) {}
         }
         
-        //Laisser afficher la dernière image pour un meilleur effet viseul
+        //Laisser afficher la dernière image pour un meilleur effet visuel
         try {
-            sleep(150);
+            sleep(200);
         } catch (InterruptedException ex) {}
         
         //Retirer l'explosion de la liste du gameModel
@@ -76,6 +76,8 @@ public class BrickExplosion extends Thread {
         
     }
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Getters
     public int getNb() {
         return nb;
     }
@@ -96,6 +98,8 @@ public class BrickExplosion extends Thread {
         return image;
     }
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //----------Setters
     public void setNb(int nb) {
         this.nb = nb;
     }

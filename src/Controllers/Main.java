@@ -4,7 +4,9 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        GameController t = new GameController();
+        GameController game = new GameController();
+        Thread gameThread = new Thread(game);
+        gameThread.start();
         
     }
     
