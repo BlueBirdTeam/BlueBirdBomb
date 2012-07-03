@@ -1,12 +1,8 @@
 package Controllers;
 
 import Files.MapFile;
-import Models.GameModel;
-import Models.Map;
-import Models.Player;
-import Models.StatBar;
+import Models.*;
 import Vues.GameVue;
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -29,6 +25,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     private final static int frameWidth = GameVue.getCaseSize() * 16 + 146;
     private final static int frameHeight = GameVue.getCaseSize() * 12 + 30;
     private static int movesSpeed = 10;
+    private Moves moves;
         
     //=======================================================================================//
     //                                                                       CONSTRUCTORS                                                                             //
@@ -36,6 +33,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
     
     public GameController() throws IOException {
         gameModel = new GameModel();
+        moves = new Moves(gameModel);
         initialize();
     }    
     
@@ -77,6 +75,8 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         Thread statBarThread = new Thread(statBar);
         statBarThread.start();
         
+        moves.start();
+        
         //Ajout des listeners
         addKeyListener(this);
         addMouseListener(this);
@@ -91,7 +91,7 @@ public class GameController extends JFrame implements KeyListener, MouseListener
         while(true) {
             repaint();
             try {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (InterruptedException ex) {}
         }
     }
@@ -126,28 +126,27 @@ public class GameController extends JFrame implements KeyListener, MouseListener
                 
         switch(key) {
             case KeyEvent.VK_RIGHT : //Mouvement vers la droite
-                gameModel.moveOnX(movesSpeed);
+                moves.setDirection(1);                
                 break;
             case KeyEvent.VK_LEFT : //Mouvement vers la gauche
-                gameModel.moveOnX(-movesSpeed);
+                moves.setDirection(3);                
                 break;
             case KeyEvent.VK_UP : //Mouvement vers le haut
-                gameModel.moveOnY(-movesSpeed);
+                moves.setDirection(4);                
                 break;
             case KeyEvent.VK_DOWN : //Mouvement vers le bas
-                gameModel.moveOnY(movesSpeed);
+                moves.setDirection(2);                
                 break;
             case KeyEvent.VK_SPACE : //Déposer une bombe
-                try {
-                    gameModel.putBomb();
-                }
-                catch(IOException | InterruptedException e) {}
+                moves.setDirection(10);                
                 break;
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) { }
+    public void keyReleased(KeyEvent ke) {
+        moves.setDirection(0);
+    }
 
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
